@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Раскадровка — Wedding Awards South</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #2c2c24;
+            --bg-card: #3d3d32;
+            --bg-input: #4a4a3e;
+            --bg-light: #d4cfc4;
+            --accent: #c45a32;
+            --accent-hover: #d4693f;
+            --text-light: #f5f3ef;
+            --text-dim: #a8a498;
+            --text-dark: #2c2c24;
+            --border: #5a5a4e;
+        }
+
+        /* Светлая тема — молочные/кремовые оттенки */
+        [data-theme="light"] {
+            --bg-main: #f8f5f0;
+            --bg-card: #fffbf5;
+            --bg-input: #f0ebe3;
+            --bg-light: #e8e2d8;
+            --accent: #c45a32;
+            --accent-hover: #d4693f;
+            --text-light: #3a3632;
+            --text-dim: #6b6560;
+            --text-dark: #2c2c24;
+            --border: #d4cfc4;
+        }
+
+        /* Переключатель темы */
+        .theme-toggle {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        .theme-toggle-text {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-dim);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: sticky;
+            top: 0;
+            background: var(--bg-main);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-input);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 32px auto;
+            margin-left: 60px;
+            margin-right: 60px;
+            max-width: calc(100% - 120px);
+            background: var(--bg-card);
+            border: 3px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 500;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            text-decoration: underline;
+            text-decoration-color: var(--accent);
+            text-underline-offset: 4px;
+        }
+
+        .project-title-input {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(28px, 5vw, 56px);
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            width: 100%;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s;
+            resize: none;
+            overflow: hidden;
+            line-height: 1.2;
+            min-height: 1.2em;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .project-title-input:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 40px;
+            font-size: 18px;
+            color: var(--text-dim);
+            margin-top: 28px;
+            align-items: center;
+        }
+
+        .hero-meta div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .duration-edit-input {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: var(--text-light);
+            font-size: 18px;
+            font-family: inherit;
+            width: 80px;
+            text-align: center;
+        }
+
+        .duration-edit-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        /* Characters Section */
+        .characters-section {
+            margin-top: 32px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+        }
+
+        .characters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .section-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .characters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .character-item {
+            display: grid;
+            grid-template-columns: 80px 150px 1fr 40px;
+            gap: 12px;
+            align-items: start;
+            padding: 12px;
+            background: var(--bg-input);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .character-item input,
+        .character-item textarea {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 10px;
+            color: var(--text-light);
+            font-size: 13px;
+            font-family: inherit;
+        }
+
+        .character-item input:focus,
+        .character-item textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .character-item textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .character-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            padding: 8px 0;
+        }
+
+        .character-remove {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .character-remove:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .characters-empty {
+            color: var(--text-dim);
+            font-size: 13px;
+            font-style: italic;
+            padding: 12px;
+            text-align: center;
+        }
+
+        /* Characters in Scene */
+        .characters-in-scene .characters-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .character-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .character-checkbox:hover {
+            border-color: var(--accent);
+        }
+
+        .character-checkbox input {
+            accent-color: var(--accent);
+        }
+
+        .character-checkbox input:checked+span {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .no-characters {
+            color: var(--text-dim);
+            font-size: 12px;
+            font-style: italic;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 60px 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+        }
+
+        /* Scenes Container */
+        .scenes {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px 80px;
+        }
+
+        /* Scene Card - NEW LAYOUT */
+        .scene {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding: 32px;
+            background: var(--bg-card);
+            border-radius: 16px;
+            border: 3px solid var(--border);
+            transition: border-color 0.2s;
+        }
+
+        .scene:hover {
+            border-color: var(--accent);
+        }
+
+        /* Шапка: бейдж | название | мета | кнопки */
+        .scene-header-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .scene-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            padding: 8px 18px;
+            border-radius: 8px;
+            flex-shrink: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .scene-title-input {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            flex: 1;
+            min-width: 200px;
+            outline: none;
+            padding: 4px 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        .scene-title-input:focus {
+            border-bottom-color: var(--accent);
+        }
+
+        .scene-meta-inline {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .meta-field {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .meta-field label {
+            font-size: 14px;
+        }
+
+        .meta-field input,
+        .meta-field select {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        .duration-input {
+            width: 60px;
+        }
+
+        .characters-inline {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .characters-checkboxes {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .character-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: var(--text-dim);
+            cursor: pointer;
+        }
+
+        .character-checkbox input {
+            width: 14px;
+            height: 14px;
+        }
+
+        .no-characters {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .scene-actions {
+            display: flex;
+            gap: 6px;
+            margin-left: auto;
+        }
+
+        .scene-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .scene-btn:hover {
+            border-color: var(--accent);
+        }
+
+        /* Середина: картинка 75% + описание 25% */
+        .scene-middle-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .scene-image-container {
+            flex: 0 0 60%;
+            position: relative;
+        }
+
+        .scene-image-dropzone {
+            aspect-ratio: 16/9;
+            background: var(--bg-main);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-image-dropzone:hover {
+            border-color: var(--accent);
+        }
+
+        .scene-image-dropzone.has-image {
+            border: none;
+        }
+
+        .dropzone-content {
+            text-align: center;
+            color: var(--text-dim);
+        }
+
+        .dropzone-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .scene-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        .remove-image {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(196, 90, 50, 0.9);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scene-image-dropzone:hover .remove-image {
+            display: flex;
+        }
+
+        .scene-description-side {
+            flex: 0 0 40%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scene-description-side .description-input {
+            flex: 1;
+            min-height: 120px;
+            background: var(--bg-input);
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        /* Низ: диалог + заметки */
+        .scene-bottom-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .field-dialogue {
+            flex: 2;
+        }
+
+        .field-notes {
+            flex: 1;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-dim);
+        }
+
+        .field textarea {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--text-light);
+            font-size: 14px;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.5;
+        }
+
+        .field textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .field textarea.dialogue {
+            background: var(--bg-main);
+            border-left: 4px solid var(--accent);
+            font-style: italic;
+            min-height: 160px;
+            font-size: 18px;
+            padding: 16px;
+        }
+
+        /* Auto-expand textareas */
+        .field textarea {
+            overflow: hidden;
+            resize: none;
+        }
+
+        /* AI Prompt Field */
+        .prompt-field {
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border);
+        }
+
+        .prompt-field .field-label {
+            font-size: 10px;
+            color: #7a7a6e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .prompt-field .field-label::before {
+            content: '🤖';
+        }
+
+        .prompt-field textarea {
+            font-size: 11px;
+            min-height: 50px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px dashed var(--border);
+            color: #8a8a7e;
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+
+        .prompt-field textarea:focus {
+            color: var(--text-light);
+            border-color: var(--accent);
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .header {
+                padding: 16px 24px;
+            }
+
+            .hero {
+                padding: 40px 24px;
+            }
+
+            .toolbar {
+                padding: 0 24px 16px;
+            }
+
+            .scenes {
+                padding: 0 24px 40px;
+            }
+
+            .scene {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+        }
+
+        /* Hidden file input */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo">🎬 Storyboard</div>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle" title="Переключить тему">
+                <span class="theme-icon">🌙</span>
+                <span class="theme-toggle-text">Тёмная</span>
+            </button>
+            <button class="btn btn-secondary" id="resetDefault" title="Сбросить к дефолтным сценам">🔄 Сброс</button>
+            <button class="btn btn-secondary" id="loadProject">📂 Загрузить</button>
+            <button class="btn btn-secondary" id="saveProject">💾 Сохранить</button>
+            <button class="btn btn-primary" id="exportHTML">📄 Экспорт</button>
+            <button class="btn btn-primary" id="printVersion">📄 PDF</button>
+        </div>
+    </header>
+
+    <section class="hero">
+        <textarea class="project-title-input" id="projectTitle" rows="1"
+            placeholder="Название проекта...">Заявка на Wedding Awards South</textarea>
+        <div class="hero-meta">
+            <div><span class="dot"></span> <span id="sceneCount">0</span> сцен</div>
+            <div><span class="dot"></span> <input type="text" class="duration-edit-input" id="totalDuration"
+                    value="0:00" placeholder="0:00"> хронометраж</div>
+            <div><span class="dot"></span> Статичные кадры</div>
+        </div>
+
+        <!-- Секция Герои -->
+        <div class="characters-section">
+            <div class="characters-header">
+                <span class="section-label">👤 Герои</span>
+                <button class="btn btn-small" id="addCharacter">➕ Добавить</button>
+            </div>
+            <div class="characters-list" id="charactersList"></div>
+        </div>
+    </section>
+
+    <div class="toolbar">
+        <div class="section-title">Сцены</div>
+        <button class="btn btn-primary" id="addScene">➕ Добавить сцену</button>
+    </div>
+
+    <main class="scenes" id="scenesContainer"></main>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
+    </div>
+
+    <input type="file" id="loadProjectInput" accept=".json" class="hidden">
+
+    <script>
+        let scenes = [];
+        let characters = [];
+
+        const scenesContainer = document.getElementById('scenesContainer');
+        const projectTitleEl = document.getElementById('projectTitle');
+        const sceneCountEl = document.getElementById('sceneCount');
+        const totalDurationEl = document.getElementById('totalDuration');
+        const charactersListEl = document.getElementById('charactersList');
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            loadFromLocalStorage();
+            if (scenes.length === 0) {
+                loadDefaultScenes();
+            }
+            renderAllScenes();
+            renderCharacters();
+        });
+
+        // ===== THEME FUNCTIONS =====
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('storyboard_theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeButton(savedTheme);
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('storyboard_theme', newTheme);
+            updateThemeButton(newTheme);
+        }
+
+        function updateThemeButton(theme) {
+            const icon = document.querySelector('.theme-icon');
+            const text = document.querySelector('.theme-toggle-text');
+            if (theme === 'light') {
+                icon.textContent = '☀️';
+                text.textContent = 'Светлая';
+            } else {
+                icon.textContent = '🌙';
+                text.textContent = 'Тёмная';
+            }
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
+        // Event Listeners
+        document.getElementById('addScene').addEventListener('click', addScene);
+        document.getElementById('addCharacter').addEventListener('click', addCharacter);
+        document.getElementById('saveProject').addEventListener('click', saveProject);
+        document.getElementById('loadProject').addEventListener('click', () => document.getElementById('loadProjectInput').click());
+        document.getElementById('loadProjectInput').addEventListener('change', loadProject);
+        document.getElementById('exportHTML').addEventListener('click', exportHTML);
+        document.getElementById('printVersion').addEventListener('click', printVersion);
+        document.getElementById('resetDefault').addEventListener('click', () => {
+            if (confirm('Сбросить все сцены к дефолтным? Текущие изменения будут потеряны!')) {
+                localStorage.removeItem('storyboard_v2');
+                loadDefaultScenes();
+                characters = [];
+                renderCharacters();
+                renderAllScenes();
+                showToast('Сброшено к дефолту');
+            }
+        });
+        projectTitleEl.addEventListener('input', saveToLocalStorage);
+        projectTitleEl.addEventListener('input', function () {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+        // Инициализация высоты заголовка
+        setTimeout(() => {
+            projectTitleEl.style.height = 'auto';
+            projectTitleEl.style.height = projectTitleEl.scrollHeight + 'px';
+        }, 100);
+
+        // ===== CHARACTERS FUNCTIONS =====
+
+        function addCharacter() {
+            const character = {
+                id: Date.now(),
+                name: '',
+                description: ''
+            };
+            characters.push(character);
+            renderCharacters();
+            renderAllScenes(); // Обновляем сцены для новых чекбоксов
+            saveToLocalStorage();
+            showToast('Герой добавлен');
+        }
+
+        function removeCharacter(id) {
+            characters = characters.filter(c => c.id !== id);
+            renderCharacters();
+            renderAllScenes(); // Обновляем сцены
+            saveToLocalStorage();
+            showToast('Герой удалён');
+        }
+
+        function renderCharacters() {
+            if (characters.length === 0) {
+                charactersListEl.innerHTML = '<div class="characters-empty">Добавьте героев для описания персонажей</div>';
+                return;
+            }
+
+            charactersListEl.innerHTML = '';
+            characters.forEach((char, index) => {
+                const item = document.createElement('div');
+                item.className = 'character-item';
+                item.innerHTML = `
+                    <div class="character-label">Герой ${index + 1}</div>
+                    <input type="text" class="char-name" value="${char.name}" placeholder="Имя...">
+                    <textarea class="char-description" placeholder="Детальное описание: костюм, аксессуары, внешность...">${char.description}</textarea>
+                    <button class="character-remove" title="Удалить">🗑️</button>
+                `;
+
+                item.querySelector('.char-name').addEventListener('input', (e) => {
+                    char.name = e.target.value;
+                    saveToLocalStorage();
+                });
+
+                item.querySelector('.char-description').addEventListener('input', (e) => {
+                    char.description = e.target.value;
+                    saveToLocalStorage();
+                });
+
+                item.querySelector('.character-remove').addEventListener('click', () => removeCharacter(char.id));
+
+                charactersListEl.appendChild(item);
+            });
+        }
+
+        // Default scenes
+        function loadDefaultScenes() {
+            scenes = [
+                { id: 1, title: "Рельсы вдаль", description: "Статичный кадр: рельсы уходят вдаль, камера на уровне земли. Степь, безысходность.", dialogue: "«Где-то так далеко под Волгоградом, что не знают не только про ВЕДДИНГ ЭВОРДС Соут...", duration: "0:05", shotType: "wide", notes: "Голос за кадром. Низкий ракурс.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, wide shot, abandoned railway tracks stretching into distance, perspective from ground level, bare winter trees on sides, Russian steppe, desolate atmosphere, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 2, title: "Женя на рельсах с кляпом", description: "Герой 1 (Женя) лежит на рельсах связанный, видно рельсы и героя по пояс. Платок на шее, кляп во рту. Пытается выплюнуть — получается.", dialogue: "...но и про английский язык…»", duration: "0:05", shotType: "medium", notes: "Голос за кадром. Кляп выплёвывается.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, young man lying tied on railway tracks, gag in mouth trying to spit it out, scarf around neck, ropes binding arms, waist up visible, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 3, title: "Приветствие — крупный план", description: "Крупный план Жени уже без кляпа. Смотрит в камеру.", dialogue: "Привет! Меня зовут Женя Кашарный, и насколько я понимаю у меня не так много времени. Не более трёх минут…", duration: "0:08", shotType: "close", notes: "Мимика — лёгкая паника с юмором.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man face looking at camera, lying on ground, no gag, slightly worried but humorous expression, scarf visible, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 4, title: "Поезд вдалеке", description: "Вдалеке показывается поезд — точка на горизонте.", dialogue: "Вижу в ваших глазах несколько логичных вопросов:", duration: "0:03", shotType: "wide", notes: "Голос Жени за кадром. Далёкий гудок.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, wide shot, distant steam train on horizon, small silhouette approaching on railway tracks, perspective down rails, bare trees, ominous atmosphere, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 5, title: "Женя — средний план", description: "Женя, кадр по пояс. Видно связанные руки и странный платок на шее.", dialogue: "«Почему я связан, лежу на рельсах и у меня на шее этот странный платок?» Во-первых, не на все вопросы я могу ответить, особенно про рельсы.", duration: "0:08", shotType: "medium", notes: "Жестикулирует связанными руками.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, young man lying on railway tracks, waist up visible, bound hands gesturing, scarf around neck, talking to camera, bare trees background, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 6, title: "Женя — крупный план лица", description: "Укрупняемся на героя. Крупный план — только лицо в кадре.", dialogue: "А во-вторых, это моя первая заявка и я просто не представляю, чем могу вас удивить.", duration: "0:05", shotType: "close", notes: "Честный взгляд в камеру.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, extreme close-up, young man face only filling frame, honest expression looking at camera, scarf barely visible at bottom, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 7, title: "Поезд ближе", description: "Поезд крупнее, нагнетаем атмосферу.", dialogue: "Ну не снимать же мне, как я читаю рэп. Или прихожу на исповедь.", duration: "0:04", shotType: "medium", notes: "Голос Жени за кадром. Нарастающий звук.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, steam train approaching on railway tracks, larger than before, smoke billowing, sense of danger, perspective down rails, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 8, title: "Женя сидит на рельсах", description: "Женя, средний план (по пояс), сидит на рельсах связанный.", dialogue: "Или как прихожу на исповедь и там читаю рэп. Или как я обратился к гадалке, чтобы она нагадала победу.", duration: "0:06", shotType: "medium", notes: "Темп речи ускоряется.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, young man sitting on railway tracks with bound hands, scarf around neck, speaking faster, bare trees, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 9, title: "Женя — крупный план, темп", description: "Крупный план лица Жени, нарастает темп речи.", dialogue: "Или как я личность и смотрю свою прошлогоднюю заявку, которую и тогда-то никто не понял. Или как я пою квновскую песню, а на небе графика из рекламы мегафона.", duration: "0:08", shotType: "close", notes: "Быстрый темп!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man face speaking rapidly, animated expression, slight panic, scarf visible, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 10, title: "Поезд — колёса", description: "Поезд ещё крупнее, видны колёса.", dialogue: "Или где я прокурор с ирокезом и с какого-то чёрта осуждаю всю ивент-индустрию.", duration: "0:04", shotType: "extreme-close", notes: "Голос Жени за кадром. Звук металла.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, extreme close-up, train wheels on railway tracks, metal details, low angle, industrial power, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 11, title: "Женя — ещё быстрее", description: "Крупный план Жени, говорит быстрее.", dialogue: "Или очень похожую на прошлогоднюю заявку другого ведущего на фоне проектора. Или как я пародирую Бората и заодно половину краснодарских ведущих.", duration: "0:07", shotType: "close", notes: "Паника + юмор.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man speaking even faster, escalating panic with humor, wind blowing hair, lying on tracks, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 12, title: "Поезд гудит", description: "Поезд начинает гудеть, крупно локомотив.", dialogue: "Или где я под музыку из Интерстеллар прошу себя молодого не есть доширак и познакомиться с Настей Морозовой.", duration: "0:05", shotType: "medium", notes: "Голос Жени за кадром. Гудок!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, steam locomotive front view, horn blasting, approaching danger, dramatic angle, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 13, title: "Женя — паника нарастает", description: "Крупный план Жени, паника нарастает.", dialogue: "Или где я играю на рояле для пока ещё повернувшихся ко мне организаторов. Или мультики как в камеди баттле с топами ивента.", duration: "0:06", shotType: "close", notes: "Темп ещё быстрее.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man face with rising panic, speaking intensely, determined expression, scarf visible, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 14, title: "Поезд — детальный план", description: "Поезд гудит много раз. Детальный план колёс/гудка.", dialogue: "Или как я весь такой настоящий не по-настоящему играю на гитаре на фоне ненастоящих свечей…", duration: "0:04", shotType: "extreme-close", notes: "Голос Жени за кадром. Много гудков!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, extreme close-up, train wheels and horn detail, motion blur effect, metal textures, maximum tension, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 15, title: "Женя — почти кричит", description: "Крупный план Жени, почти кричит, темп максимальный.", dialogue: "Примерный семьянин, спасатель, бармен, заложник, ведущий новостей, покойник, шизофреник, друг видеографа, лучик, в конце концов…", duration: "0:08", shotType: "close", notes: "Кульминация!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man almost shouting, maximum intensity, desperate but comedic, climax moment, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 16, title: "Поезд максимально крупно", description: "Поезд максимально крупно, заполняет кадр.", dialogue: "Стендап, подкаст, презентация, видеозвонок, интервью, манифест, дебаты, обзор, пародия, оммаж, лайф, шоурил, дуэт, камео…", duration: "0:06", shotType: "close", notes: "Голос Жени за кадром. Напряжение на пике!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, steam train front filling entire frame, imminent collision, peak tension, dramatic locomotive, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 17, title: "Появляется Бугаенко", description: "Появляется Бугаенко (Герой 2), средний план. Поднимает Женю, отряхивает.", dialogue: "Жень, а ты чё разлёгся? Ты ж хотел в премии участвовать, чтобы имя Евгения Кашарного каждый на Юге знал.", duration: "0:06", shotType: "medium", notes: "Неожиданный поворот!", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, second man entering frame helping first man up from railway tracks, rescue moment, frustrated gesture, bare trees, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 18, title: "Двое у рельсов", description: "Двое стоят у рельсов, средний план.", dialogue: "Тебе же статуэтка в первый год участия нужна была. А ты тут лежишь, ещё и в этом странном платке.", duration: "0:05", shotType: "medium", notes: "Бугаенко ругается.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium two-shot, two men standing by railway tracks talking, one scolding the other, bare winter trees, comedic dialogue scene, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 19, title: "Женя удивлён", description: "Женя, крупный план. Удивлённое выражение.", dialogue: "Так мы вот как раз сейчас заявку снимаем!", duration: "0:03", shotType: "close", notes: "Комедийный момент.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, young man with surprised expression, confused face, scarf around neck, comedic moment, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 20, title: "Бугаенко — крупный план", description: "Бугаенко, крупный план.", dialogue: "Кто вы, никого нет. Эх ты, весь город на тебя смотрел. Да и поезд твой ушёл.", duration: "0:05", shotType: "close", notes: "Разочарование.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, close-up, older man face with disappointed expression, shaking head, serious demeanor, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 21, title: "Поезд проезжает мимо", description: "Общий план. Поезд проезжает мимо. Два героя на переднем плане.", dialogue: "", duration: "0:04", shotType: "wide", notes: "Без слов, только звук поезда.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, wide shot, steam train passing by in background, two men silhouettes in foreground watching, bare trees, dramatic sky, minimalist line art, 16:9 aspect ratio", image: "" },
+                { id: 22, title: "Финал — взгляд в камеру", description: "Женя смотрит в камеру, уверенный взгляд.", dialogue: "Это твой поезд уже ушёл, а мой только набирает обороты.", duration: "0:05", shotType: "medium", notes: "Эпичный финал! Титры.", prompt: "Film storyboard sketch, inverted black and white, white lines on dark background, medium shot, young man looking confidently at camera, determined expression, second man beside him, triumphant finale, bare trees background, minimalist line art, 16:9 aspect ratio", image: "" }
+            ];
+            projectTitleEl.value = "Заявка на Wedding Awards South — Евгений Кашарный";
+            saveToLocalStorage();
+        }
+
+        function renderAllScenes() {
+            scenesContainer.innerHTML = '';
+            scenes.forEach((scene, index) => renderScene(scene, index + 1));
+            updateMeta();
+        }
+
+        function renderScene(scene, index) {
+            const card = document.createElement('article');
+            card.className = 'scene';
+            card.dataset.id = scene.id;
+
+            const shotTypes = {
+                'wide': 'Общий план',
+                'medium': 'Средний план',
+                'close': 'Крупный план',
+                'extreme-close': 'Детальный план',
+                'pov': 'От первого лица',
+                'top-down': 'Вид сверху'
+            };
+
+            card.innerHTML = `
+                <!-- ШАПКА: Название | Таймкод | План | Герои | Кнопки -->
+                <div class="scene-header-row">
+                    <span class="scene-badge">Сцена ${index}</span>
+                    <input type="text" class="scene-title-input" value="${scene.title}" placeholder="Название сцены...">
+                    <div class="scene-meta-inline">
+                        <div class="meta-field">
+                            <label>⏱</label>
+                            <input type="text" class="duration-input" value="${scene.duration || '0:00'}" placeholder="0:00">
+                        </div>
+                        <div class="meta-field">
+                            <label>📷</label>
+                            <select class="shot-type-select">
+                                <option value="">Выберите...</option>
+                                ${Object.entries(shotTypes).map(([val, label]) =>
+                `<option value="${val}" ${scene.shotType === val ? 'selected' : ''}>${label}</option>`
+            ).join('')}
+                            </select>
+                        </div>
+                        <div class="meta-field characters-inline">
+                            <label>👤</label>
+                            <div class="characters-checkboxes">
+                                ${characters.length === 0
+                    ? '<span class="no-characters">Нет героев</span>'
+                    : characters.map((char, i) => `
+                                        <label class="character-checkbox">
+                                            <input type="checkbox" value="${char.id}" ${(scene.charactersInScene || []).includes(char.id) ? 'checked' : ''}>
+                                            <span>${char.name || 'Герой ' + (i + 1)}</span>
+                                        </label>
+                                    `).join('')
+                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="scene-actions">
+                        <button class="scene-btn move-up" title="Вверх">⬆️</button>
+                        <button class="scene-btn move-down" title="Вниз">⬇️</button>
+                        <button class="scene-btn duplicate" title="Копировать">📋</button>
+                        <button class="scene-btn delete" title="Удалить">🗑️</button>
+                    </div>
+                </div>
+
+                <!-- СЕРЕДИНА: Картинка (75%) + Описание (25%) -->
+                <div class="scene-middle-row">
+                    <div class="scene-image-container">
+                        <div class="scene-image-dropzone ${scene.image ? 'has-image' : ''}">
+                            <input type="file" class="image-input hidden" accept="image/*">
+                            <div class="dropzone-content" ${scene.image ? 'style="display:none"' : ''}>
+                                <div class="dropzone-icon">🖼️</div>
+                                <div>Нажмите или перетащите</div>
+                            </div>
+                            <img class="scene-image" src="${scene.image || ''}" ${scene.image ? '' : 'style="display:none"'}>
+                            <button class="remove-image" ${scene.image ? '' : 'style="display:none"'}>✕</button>
+                        </div>
+                    </div>
+                    <div class="scene-description-side">
+                        <div class="field-label">Описание</div>
+                        <textarea class="description-input" placeholder="Что происходит в кадре...">${scene.description || ''}</textarea>
+                    </div>
+                </div>
+
+                <!-- НИЗ: Диалог | Заметки -->
+                <div class="scene-bottom-row">
+                    <div class="field field-dialogue">
+                        <div class="field-label">Диалоги / Закадровый текст</div>
+                        <textarea class="dialogue-input dialogue" placeholder="Текст, который звучит...">${scene.dialogue || ''}</textarea>
+                    </div>
+                    <div class="field field-notes">
+                        <div class="field-label">Заметки</div>
+                        <textarea class="notes-input" placeholder="Технические заметки...">${scene.notes || ''}</textarea>
+                    </div>
+                </div>
+                <!-- ПРОМПТ -->
+                <div class="field prompt-field">
+                    <div class="field-label">Промпт для генерации</div>
+                    <textarea class="prompt-input" placeholder="Описание для AI-генератора...">${scene.prompt || ''}</textarea>
+                </div>
+            `;
+
+            setupSceneEvents(card, scene);
+            scenesContainer.appendChild(card);
+
+            // Авто-расширение всех textarea под содержимое
+            card.querySelectorAll('textarea').forEach(autoExpand);
+        }
+
+        function autoExpand(textarea) {
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+            textarea.addEventListener('input', function () {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        }
+
+        // Init App
+        // Init App
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTheme();
+            loadFromLocalStorage();
+            if (scenes.length === 0) {
+                loadDefaultScenes();
+            }
+            renderAllScenes();
+            renderCharacters();
+        });
+
+        function setupSceneEvents(card, scene) {
+            const dropzone = card.querySelector('.scene-image-dropzone');
+            const fileInput = card.querySelector('.image-input');
+            const imageEl = card.querySelector('.scene-image');
+            const removeBtn = card.querySelector('.remove-image');
+            const dropzoneContent = card.querySelector('.dropzone-content');
+
+            dropzone.addEventListener('click', (e) => {
+                if (!e.target.closest('.remove-image')) fileInput.click();
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        scene.image = e.target.result;
+                        imageEl.src = e.target.result;
+                        imageEl.style.display = 'block';
+                        removeBtn.style.display = 'flex';
+                        dropzoneContent.style.display = 'none';
+                        dropzone.classList.add('has-image');
+                        saveToLocalStorage();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.style.borderColor = 'var(--accent)'; });
+            dropzone.addEventListener('dragleave', () => { dropzone.style.borderColor = ''; });
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.style.borderColor = '';
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                        scene.image = ev.target.result;
+                        imageEl.src = ev.target.result;
+                        imageEl.style.display = 'block';
+                        removeBtn.style.display = 'flex';
+                        dropzoneContent.style.display = 'none';
+                        dropzone.classList.add('has-image');
+                        saveToLocalStorage();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                scene.image = null;
+                imageEl.src = '';
+                imageEl.style.display = 'none';
+                removeBtn.style.display = 'none';
+                dropzoneContent.style.display = '';
+                dropzone.classList.remove('has-image');
+                saveToLocalStorage();
+            });
+
+            card.querySelector('.scene-title-input').addEventListener('input', (e) => { scene.title = e.target.value; saveToLocalStorage(); });
+            card.querySelector('.duration-input').addEventListener('input', (e) => { scene.duration = e.target.value; saveToLocalStorage(); updateMeta(); });
+            card.querySelector('.shot-type-select').addEventListener('change', (e) => { scene.shotType = e.target.value; saveToLocalStorage(); });
+            card.querySelector('.description-input').addEventListener('input', (e) => { scene.description = e.target.value; saveToLocalStorage(); });
+            card.querySelector('.dialogue-input').addEventListener('input', (e) => { scene.dialogue = e.target.value; saveToLocalStorage(); });
+            card.querySelector('.notes-input').addEventListener('input', (e) => { scene.notes = e.target.value; saveToLocalStorage(); });
+            card.querySelector('.prompt-input').addEventListener('input', (e) => { scene.prompt = e.target.value; saveToLocalStorage(); });
+
+            // Обработка выбора героев в сцене
+            card.querySelectorAll('.character-checkbox input').forEach(checkbox => {
+                checkbox.addEventListener('change', () => {
+                    if (!scene.charactersInScene) scene.charactersInScene = [];
+                    const charId = parseInt(checkbox.value);
+                    if (checkbox.checked) {
+                        if (!scene.charactersInScene.includes(charId)) {
+                            scene.charactersInScene.push(charId);
+                        }
+                    } else {
+                        scene.charactersInScene = scene.charactersInScene.filter(id => id !== charId);
+                    }
+                    saveToLocalStorage();
+                });
+            });
+
+            card.querySelector('.move-up').addEventListener('click', () => moveScene(scene.id, -1));
+            card.querySelector('.move-down').addEventListener('click', () => moveScene(scene.id, 1));
+            card.querySelector('.duplicate').addEventListener('click', () => duplicateScene(scene.id));
+            card.querySelector('.delete').addEventListener('click', () => deleteScene(scene.id));
+        }
+
+        function addScene() {
+            const scene = { id: Date.now(), title: '', description: '', dialogue: '', duration: '0:00', shotType: '', notes: '', prompt: '', charactersInScene: [], image: null };
+            scenes.push(scene);
+            renderAllScenes();
+            saveToLocalStorage();
+            showToast('Сцена добавлена');
+        }
+
+        function moveScene(id, direction) {
+            const index = scenes.findIndex(s => s.id === id);
+            const newIndex = index + direction;
+            if (newIndex < 0 || newIndex >= scenes.length) return;
+            [scenes[index], scenes[newIndex]] = [scenes[newIndex], scenes[index]];
+            renderAllScenes();
+            saveToLocalStorage();
+        }
+
+        function duplicateScene(id) {
+            const scene = scenes.find(s => s.id === id);
+            const index = scenes.findIndex(s => s.id === id);
+            const newScene = { ...scene, id: Date.now(), title: scene.title + ' (копия)' };
+            scenes.splice(index + 1, 0, newScene);
+            renderAllScenes();
+            saveToLocalStorage();
+            showToast('Сцена дублирована');
+        }
+
+        function deleteScene(id) {
+            scenes = scenes.filter(s => s.id !== id);
+            renderAllScenes();
+            saveToLocalStorage();
+            showToast('Сцена удалена');
+        }
+
+        function updateMeta() {
+            sceneCountEl.textContent = scenes.length;
+            let totalSeconds = 0;
+            scenes.forEach(s => {
+                if (s.duration) {
+                    const parts = s.duration.split(':');
+                    if (parts.length === 2) {
+                        totalSeconds += parseInt(parts[0] || 0) * 60 + parseInt(parts[1] || 0);
+                    }
+                }
+            });
+            const mins = Math.floor(totalSeconds / 60);
+            const secs = totalSeconds % 60;
+            totalDurationEl.value = `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // ===== PERSISTENCE =====
+
+        function saveToLocalStorage() {
+            localStorage.setItem('storyboard_v2', JSON.stringify({ title: projectTitleEl.value, scenes, characters }));
+        }
+
+        function loadFromLocalStorage() {
+            const data = localStorage.getItem('storyboard_v2');
+            if (data) {
+                const parsed = JSON.parse(data);
+                projectTitleEl.value = parsed.title || '';
+                scenes = parsed.scenes || [];
+                characters = parsed.characters || [];
+            }
+        }
+
+        function saveProject() {
+            const data = { title: projectTitleEl.value, scenes, characters, exportedAt: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${projectTitleEl.value || 'storyboard'}.json`;
+            a.click();
+            showToast('Проект сохранён');
+        }
+
+        function loadProject(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    projectTitleEl.value = data.title || '';
+                    scenes = data.scenes || [];
+                    characters = data.characters || [];
+                    renderAllScenes();
+                    renderCharacters();
+                    saveToLocalStorage();
+                    showToast('Проект загружен');
+                } catch (err) {
+                    showToast('Ошибка загрузки');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function exportHTML() {
+            // Export static HTML version
+            let html = `<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>${projectTitleEl.value}</title><style>body{font-family:Arial,sans-serif;max-width:900px;margin:0 auto;padding:40px;background:#2c2c24;color:#f5f3ef}h1{text-align:center;margin-bottom:40px}.scene{margin-bottom:40px;background:#3d3d32;padding:24px;border-radius:12px}.scene-header{font-size:20px;font-weight:bold;margin-bottom:12px;color:#c45a32}.scene-image{max-width:100%;border-radius:8px;margin-bottom:16px}.field{margin-bottom:12px}.field-label{font-size:12px;color:#a8a498;text-transform:uppercase;margin-bottom:4px}.dialogue{background:#2c2c24;padding:12px;border-left:3px solid #c45a32;border-radius:0 8px 8px 0;font-style:italic}</style></head><body><h1>${projectTitleEl.value}</h1>`;
+            scenes.forEach((s, i) => {
+                html += `<div class="scene"><div class="scene-header">Сцена ${i + 1}: ${s.title}</div>`;
+                if (s.image) html += `<img class="scene-image" src="${s.image}">`;
+                if (s.description) html += `<div class="field"><div class="field-label">Описание</div><div>${s.description}</div></div>`;
+                if (s.dialogue) html += `<div class="field"><div class="field-label">Диалог</div><div class="dialogue">${s.dialogue.replace(/\n/g, '<br>')}</div></div>`;
+                if (s.duration) html += `<div class="field"><div class="field-label">Длительность</div><div>${s.duration}</div></div>`;
+                if (s.notes) html += `<div class="field"><div class="field-label">Заметки</div><div>${s.notes}</div></div>`;
+                html += `</div>`;
+            });
+            html += `</body></html>`;
+            const blob = new Blob([html], { type: 'text/html' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `${projectTitleEl.value || 'storyboard'}.html`;
+            a.click();
+            showToast('Экспорт завершён');
+        }
+
+        function printVersion() {
+            const shotTypes = {
+                'wide': 'Общий план',
+                'medium': 'Средний план',
+                'close': 'Крупный план',
+                'extreme-close': 'Детальный план',
+                'pov': 'От первого лица',
+                'top-down': 'Вид сверху'
+            };
+
+            let html = `<!DOCTYPE html><html lang="ru"><head><meta charset="UTF-8"><title>${projectTitleEl.value} — PDF</title>
+            <style>
+                @page { size: A4 landscape; margin: 10mm; }
+                * { box-sizing: border-box; margin: 0; padding: 0; }
+                body { font-family: Arial, sans-serif; color: #333; font-size: 12px; }
+                
+                .page { 
+                    page-break-after: always; 
+                    width: 277mm; 
+                    height: 190mm; 
+                    padding: 10px;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .page:last-child { page-break-after: auto; }
+                
+                /* Обложка */
+                .cover { 
+                    justify-content: center; 
+                    align-items: center; 
+                    text-align: center;
+                }
+                .cover h1 { font-size: 36px; margin-bottom: 20px; color: #c45a32; }
+                .cover .meta { font-size: 16px; color: #666; }
+                
+                /* Карточка сцены */
+                .scene-card {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100%;
+                    gap: 12px;
+                    padding: 20px;
+                    border: 3px solid #5a5a4e;
+                    border-radius: 12px;
+                    background: #f8f5f0;
+                }
+                
+                /* Шапка: номер + название + мета */
+                .scene-header {
+                    display: flex;
+                    align-items: center;
+                    gap: 16px;
+                    padding-bottom: 12px;
+                    border-bottom: 2px solid #d4cfc4;
+                }
+                .scene-badge {
+                    background: #c45a32;
+                    color: white;
+                    font-size: 14px;
+                    font-weight: bold;
+                    padding: 8px 16px;
+                    border-radius: 8px;
+                    text-transform: uppercase;
+                }
+                .scene-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: #c45a32;
+                    flex: 1;
+                }
+                .scene-meta {
+                    display: flex;
+                    gap: 20px;
+                    font-size: 12px;
+                    color: #666;
+                }
+                
+                /* Середина: картинка 60% + описание 40% */
+                .scene-middle {
+                    display: flex;
+                    gap: 16px;
+                    flex: 1;
+                    min-height: 0;
+                }
+                .scene-image-wrap {
+                    flex: 0 0 60%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #e8e2d8;
+                    border: 2px dashed #d4cfc4;
+                    border-radius: 10px;
+                    overflow: hidden;
+                }
+                .scene-image {
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                }
+                .scene-image-placeholder {
+                    color: #999;
+                    font-size: 14px;
+                }
+                .scene-description-side {
+                    flex: 0 0 40%;
+                    display: flex;
+                    flex-direction: column;
+                    background: #f0ebe3;
+                    border-radius: 8px;
+                    padding: 12px;
+                }
+                .scene-description-side .field-value {
+                    font-size: 14px;
+                    line-height: 1.5;
+                    color: #3a3632;
+                }
+                
+                /* Низ: диалог + заметки */
+                .scene-bottom {
+                    display: flex;
+                    gap: 16px;
+                }
+                .field-dialogue { flex: 2; }
+                .field-notes { flex: 1; }
+                
+                .field-label {
+                    font-size: 10px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    color: #6b6560;
+                    margin-bottom: 6px;
+                }
+                .field-value {
+                    font-size: 12px;
+                    line-height: 1.4;
+                }
+                .dialogue-text {
+                    background: #fffbf5;
+                    padding: 12px 16px;
+                    border-left: 4px solid #c45a32;
+                    border-radius: 0 8px 8px 0;
+                    font-style: italic;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    min-height: 80px;
+                }
+                
+                /* Промпт */
+                .prompt-row {
+                    font-size: 9px;
+                    color: #999;
+                    border-top: 1px dashed #d4cfc4;
+                    padding-top: 8px;
+                    margin-top: 8px;
+                }
+
+                /* Обложка - как в макете */
+                .cover-card {
+                    border: 3px solid #5a5a4e;
+                    border-radius: 16px;
+                    background: #f8f5f0;
+                    padding: 40px;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                }
+                .cover-card h1 {
+                    font-size: 42px;
+                    color: #c45a32;
+                    margin-bottom: 24px;
+                    font-weight: 600;
+                }
+                .cover-meta {
+                    display: flex;
+                    gap: 32px;
+                    font-size: 16px;
+                    color: #6b6560;
+                    margin-bottom: 32px;
+                    align-items: center;
+                }
+                .cover-meta .dot {
+                    width: 10px;
+                    height: 10px;
+                    background: #c45a32;
+                    border-radius: 50%;
+                    display: inline-block;
+                    margin-right: 8px;
+                }
+                .cover-meta .duration-box {
+                    background: #f0ebe3;
+                    border: 1px solid #d4cfc4;
+                    border-radius: 6px;
+                    padding: 4px 12px;
+                    font-weight: 500;
+                }
+                .characters-block {
+                    background: #fffbf5;
+                    border: 2px solid #d4cfc4;
+                    border-radius: 12px;
+                    padding: 20px;
+                    flex: 1;
+                }
+                .characters-block h3 {
+                    font-size: 14px;
+                    color: #6b6560;
+                    margin-bottom: 16px;
+                    font-weight: 600;
+                }
+                .character-row {
+                    background: #f0ebe3;
+                    border: 1px solid #d4cfc4;
+                    border-radius: 8px;
+                    padding: 12px 16px;
+                    margin-bottom: 12px;
+                    display: flex;
+                    gap: 16px;
+                    align-items: flex-start;
+                }
+                .character-row:last-child {
+                    margin-bottom: 0;
+                }
+                .character-label {
+                    color: #c45a32;
+                    font-weight: 600;
+                    font-size: 12px;
+                    min-width: 60px;
+                }
+                .character-name {
+                    font-weight: 600;
+                    color: #3a3632;
+                    min-width: 120px;
+                }
+                .character-desc {
+                    color: #6b6560;
+                    font-size: 13px;
+                    flex: 1;
+                }
+            </style></head><body>`;
+
+            // Cover page - как в макете
+            const charactersHtml = characters.length > 0
+                ? characters.map((char, i) => `
+                    <div class="character-row">
+                        <span class="character-label">Герой ${i + 1}</span>
+                        <span class="character-name">${char.name || '—'}</span>
+                        <span class="character-desc">${char.description || ''}</span>
+                    </div>
+                `).join('')
+                : '<div style="color: #999; font-style: italic;">Герои не добавлены</div>';
+
+            html += `<div class="page">
+                <div class="cover-card">
+                    <h1>${projectTitleEl.value}</h1>
+                    <div class="cover-meta">
+                        <span><span class="dot"></span>${scenes.length} сцен</span>
+                        <span><span class="dot"></span><span class="duration-box">${totalDurationEl.value}</span> хронометраж</span>
+                        <span><span class="dot"></span>Статичные кадры</span>
+                    </div>
+                    <div class="characters-block">
+                        <h3>👤 Герои</h3>
+                        ${charactersHtml}
+                    </div>
+                </div>
+            </div>`;
+
+            // Scene pages
+            scenes.forEach((s, i) => {
+                html += `<div class="page">
+                    <div class="scene-card">
+                        <!-- Шапка -->
+                        <div class="scene-header">
+                            <span class="scene-badge">Сцена ${i + 1}</span>
+                            <span class="scene-title">${s.title || 'Без названия'}</span>
+                            <div class="scene-meta">
+                                <span>⏱ ${s.duration || '0:00'}</span>
+                                <span>📷 ${shotTypes[s.shotType] || '—'}</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Середина: картинка + описание -->
+                        <div class="scene-middle">
+                            <div class="scene-image-wrap">
+                                ${s.image
+                        ? `<img class="scene-image" src="${s.image}">`
+                        : `<span class="scene-image-placeholder">Изображение не добавлено</span>`
+                    }
+                            </div>
+                            <div class="scene-description-side">
+                                <div class="field-label">Описание</div>
+                                <div class="field-value">${s.description || '—'}</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Низ: диалог + заметки -->
+                        <div class="scene-bottom">
+                            <div class="field-dialogue">
+                                <div class="field-label">Диалог / Закадровый текст</div>
+                                <div class="dialogue-text">${s.dialogue ? s.dialogue.replace(/\n/g, '<br>') : '—'}</div>
+                            </div>
+                            <div class="field-notes">
+                                <div class="field-label">Заметки</div>
+                                <div class="field-value">${s.notes || '—'}</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Промпт -->
+                        ${s.prompt ? `<div class="prompt-row"><strong>Промпт:</strong> ${s.prompt}</div>` : ''}
+                    </div>
+                </div>`;
+            });
+
+            html += `</body></html>`;
+
+            // Open in new window and trigger print
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(html);
+            printWindow.document.close();
+            setTimeout(() => printWindow.print(), 500);
+            showToast('Открыто окно PDF');
+        }
+
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('.toast-icon').textContent = '✅';
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+</body>
+
+</html>
