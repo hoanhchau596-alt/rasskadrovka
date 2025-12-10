@@ -218,6 +218,31 @@
             border-color: var(--accent);
         }
 
+        .project-types {
+            display: flex;
+            gap: 16px;
+        }
+
+        .type-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        .type-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .type-checkbox:has(input:checked) {
+            color: var(--text-light);
+        }
+
         /* Characters Section */
         .characters-section {
             margin-top: 32px;
@@ -773,7 +798,12 @@
             <div><span class="dot"></span> <span id="sceneCount">0</span> сцен</div>
             <div><span class="dot"></span> <input type="text" class="duration-edit-input" id="totalDuration"
                     value="0:00" placeholder="0:00"> хронометраж</div>
-            <div><span class="dot"></span> Статичные кадры</div>
+            <div class="project-types">
+                <label class="type-checkbox"><input type="checkbox" id="typeStatic" checked> <span class="dot"></span>
+                    Статичные кадры</label>
+                <label class="type-checkbox"><input type="checkbox" id="typeDynamic"> <span class="dot"></span>
+                    Динамика</label>
+            </div>
         </div>
 
         <!-- Секция Герои -->
@@ -869,6 +899,8 @@
             }
         });
         projectTitleEl.addEventListener('input', saveToLocalStorage);
+        document.getElementById('typeStatic').addEventListener('change', saveToLocalStorage);
+        document.getElementById('typeDynamic').addEventListener('change', saveToLocalStorage);
         projectTitleEl.addEventListener('input', function () {
             this.style.height = 'auto';
             this.style.height = this.scrollHeight + 'px';
@@ -1223,7 +1255,11 @@
         // ===== PERSISTENCE =====
 
         function saveToLocalStorage() {
-            localStorage.setItem('storyboard_v2', JSON.stringify({ title: projectTitleEl.value, scenes, characters }));
+            const projectTypes = {
+                static: document.getElementById('typeStatic').checked,
+                dynamic: document.getElementById('typeDynamic').checked
+            };
+            localStorage.setItem('storyboard_v2', JSON.stringify({ title: projectTitleEl.value, scenes, characters, projectTypes }));
         }
 
         function loadFromLocalStorage() {
@@ -1233,6 +1269,10 @@
                 projectTitleEl.value = parsed.title || '';
                 scenes = parsed.scenes || [];
                 characters = parsed.characters || [];
+                if (parsed.projectTypes) {
+                    document.getElementById('typeStatic').checked = parsed.projectTypes.static !== false;
+                    document.getElementById('typeDynamic').checked = parsed.projectTypes.dynamic === true;
+                }
             }
         }
 
